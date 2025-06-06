@@ -10,36 +10,32 @@ const getPublicationLogo = (publication: PublicationFragment, isSidebar?: boolea
 	return publication.preferences.darkMode?.logo || publication.preferences.logo;
 }
 
-export const PublicationLogo = ({ isSidebar }: { isSidebar?: boolean }) => {
+interface PublicationLogoProps {
+	className?: string;
+}
+
+export const PublicationLogo = ({ className = '' }: PublicationLogoProps) => {
 	const { publication } = useAppContext();
-	const PUBLICATION_LOGO = getPublicationLogo(publication, isSidebar);
+	const PUBLICATION_LOGO = getPublicationLogo(publication, false);
+	const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '/';
 
 	return (
-		<h1 className="relative w-full">
-			<Link
-				href={'/'}
-				aria-label={`${publication.title} blog home page`}
-				className="flex flex-row items-center justify-center gap-3"
-			>
-				{PUBLICATION_LOGO ? (
-					<>
-						<img
-							className="block w-32 shrink-0 md:w-40"
-							alt={publication.title}
-							src={resizeImage(PUBLICATION_LOGO, { w: 320, h: 80 })}
-						/>
-						<span className="text-2xl font-semibold text-white md:text-3xl">Blog</span>
-					</>
-				) : (
-					<span
-						className={`block text-2xl font-semibold ${
-							isSidebar ? 'text-black dark:text-white' : 'text-white md:text-4xl'
-						}`}
-					>
-						{publication.title}
-					</span>
-				)}
-			</Link>
-		</h1>
+		<Link
+			href={baseUrl}
+			aria-label={`${publication.title} home page`}
+			className="flex flex-row items-center gap-5"
+		>
+			{PUBLICATION_LOGO ? (
+				<img
+					className={`block w-40 ${className}`}
+					src={PUBLICATION_LOGO}
+					alt={publication.title}
+				/>
+			) : (
+				<p className="text-xl font-semibold text-slate-900 dark:text-slate-50">
+					{publication.title}
+				</p>
+			)}
+		</Link>
 	);
 };

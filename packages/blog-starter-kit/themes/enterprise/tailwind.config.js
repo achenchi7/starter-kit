@@ -1,11 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+const fontMontserratVar = 'var(--font-montserrat)';
 
 module.exports = {
 	content: ['./components/**/*.tsx', './pages/**/*.tsx'],
 	darkMode: 'class',
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: [fontMontserratVar, ...defaultTheme.fontFamily.sans],
+				heading: [fontMontserratVar, ...defaultTheme.fontFamily.sans],
+			},
 			colors: {
 				'accent-1': '#FAFAFA',
 				'accent-2': '#EAEAEA',
